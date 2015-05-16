@@ -74,6 +74,45 @@ void destroyShader( Shader *shader)
 // main display function
 void shaderDisplay( Shader *shader );
 {
+    // pass the values for the frustum projection using the clipping values
+    GLuint leftLoc = glGetUniformLocation( shader->shaderProgram, "left" );
+    GLuint rightLoc = glGetUniformLocation( shader->shaderProgram, "right" );
+    GLuint topLoc = glGetUniformLocation( shader->shaderProgram, "top" );
+    GLuint bottomLoc = glGetUniformLocation( shader->shaderProgram, "bottom" );
+    GLuint nearLoc = glGetUniformLocation( shader->shaderProgram, "near" );
+    GLuint farLoc = glGetUniformLocation( shader->shaderProgram, "far" );
+
+    glUniform1f( leftLoc, shader->left );
+    glUniform1f( rightLoc, shader->right );
+    glUniform1f( topLoc, shader->top );
+    glUniform1f( bottomLoc, shader->bot );
+    glUniform1f( nearLoc, shader->near );
+    glUniform1f( farLoc, shader->far );
+
+    // pass the values for the transformation matrix
+    GLuint thetaLoc = glGetUniformLocation( shader->shaderProgram, "theta" );
+    GLuint transLoc = glGetUniformLocation( shader->shaderProgram, "trans" );
+    GLuint scaleLoc = glGetUniformLocation( shader->shaderProgram, "scale" );
+
+    glUniform3fv( thetaLoc, 1, shader->rotateVals );
+    glUniform3fv( transLoc, 1, shader->transVals );
+    glUniform3fv( scaleLoc, 1, shader->scaleVals );
+
+    // pass the values for the camera
+    GLuint posLoc = glGetUniformLocation( shader->shaderProgram, "cPosition" ); 
+    GLuint lookLoc = glGetUniformLocation( shader->shaderProgram, "cLookAt" );
+    GLuint upVecLoc = glGetUniformLocation( shader->shaderProgram, "cUp" );
+
+    glUniform3fv( posLoc, 1, shader->eyePos );
+    glUniform3fv( lookLoc, 1, shader->lookAt );
+    glUniform3fv( upVecLoc, 1, shader->upVec );
+
+    // pass the values for the lighting calculations
+    // the vertex and normals are being passed through the object
+    // display function
+    setUpLighting( shader );
+
+    return;
 }
 
 // set camera to something other than default
