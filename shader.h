@@ -5,7 +5,9 @@
 // be executed depending on the object
 // holds all the info for vertex and fragment shaders
 #include <GLUT/GLUT.h>
-#include <OpenGL/hl.h>
+#include <OpenGL/gl.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "shaderSetup.h"
 
 typedef struct Shader_Struct

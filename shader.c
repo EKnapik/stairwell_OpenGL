@@ -25,6 +25,8 @@ typedef struct Shader_Struct
 } Shader;
 */
 
+#include "shader.h"
+
 
 // makes the a shader program with the default values
 Shader* mkShader( const char *vert, const char *frag )
@@ -38,14 +40,33 @@ Shader* mkShader( const char *vert, const char *frag )
 
     shader->shaderProgram = shaderSetup( vert, frag );
     // transformation matrix values
-    shader->rotateVals = { 0.0f, 0.0f, 0.0f };
-    shader->transVals = { 0.0f, 0.0f, 0.0f };
-    shader->scaleVals = { 1.0f, 1.0f, 1.0f };
+    // rotation values
+    shader->rotateVals[0] = 0.0f;
+    shader->rotateVals[1] = 0.0f;
+    shader->rotateVals[2] = 0.0f;
+    // translation values
+    shader->transVals[0] = 0.0f;
+    shader->transVals[1] = 0.0f;
+    shader->transVals[2] = 0.0f;
+    // scale values
+    shader->scaleVals[0] = 1.0f;
+    shader->scaleVals[1] = 1.0f;
+    shader->scaleVals[2] = 1.0f;
 
     // camera values
-    shader->eyePos = { 0.0f, 0.0f, 1.0f };
-    shader->lookAt = { 0.0f, 0.0f, -1.0f };
-    shader->upVec = { 0.0f, 1.0f, 0.0f };
+    // eye values
+    shader->eyePos[0] = 0.0f;
+    shader->eyePos[1] = 0.0f;
+    shader->eyePos[2] = 1.0f;
+    // lookAt values
+    shader->lookAt[0] = 0.0f;
+    shader->lookAt[1] = 0.0f;
+    shader->lookAt[2] = -1.0f;
+    // upVector values
+    shader->upVec[0] = 0.0f;
+    shader->upVec[1] = 1.0f;
+    shader->upVec[2] = 0.0f;
+
 
     // clipping window boundaries
     shader->left = -1.0f;
@@ -72,7 +93,7 @@ void destroyShader( Shader *shader)
 
 // the method that sets up the shader program to be executed in the
 // main display function
-void shaderDisplay( Shader *shader );
+void shaderDisplay( Shader *shader )
 {
     // pass the values for the frustum projection using the clipping values
     GLuint leftLoc = glGetUniformLocation( shader->shaderProgram, "left" );
@@ -118,9 +139,17 @@ void shaderDisplay( Shader *shader );
 // set camera to something other than default
 void setCamera( Shader *shader, GLfloat eyePos[], GLfloat lookAt[], GLfloat upVec[] )
 {
-    shader->eyePos = eyePos;
-    shader->lookAt = lookAt;
-    shader->upVec = upVec;
+    shader->eyePos[0] = eyePos[0];
+    shader->eyePos[1] = eyePos[1];
+    shader->eyePos[2] = eyePos[2];
+
+    shader->lookAt[0] = lookAt[0];
+    shader->lookAt[1] = lookAt[1];
+    shader->lookAt[2] = lookAt[2];
+
+    shader->upVec[0] = upVec[0];
+    shader->upVec[1] = upVec[1];
+    shader->upVec[2] = upVec[2];
     return;
 }
 
@@ -128,7 +157,9 @@ void setCamera( Shader *shader, GLfloat eyePos[], GLfloat lookAt[], GLfloat upVe
 // x, y, z
 void setRotate( Shader *shader, GLfloat rotateVals[] )
 {
-    shader->rotateVals = rotateVals;
+    shader->rotateVals[0] = rotateVals[0];
+    shader->rotateVals[1] = rotateVals[1];
+    shader->rotateVals[2] = rotateVals[2];
     return;
 }
 
@@ -136,13 +167,17 @@ void setRotate( Shader *shader, GLfloat rotateVals[] )
 // set translation values
 void setTrans( Shader *shader, GLfloat transVals[] )
 {
-    shader->transVals = transVals;
+    shader->transVals[0] = transVals[0];
+    shader->transVals[1] = transVals[1];
+    shader->transVals[2] = transVals[2];
     return;
 }
 
 void setScale( Shader *shader, GLfloat scaleVals[] )
 {
-    shader->scaleVals = scaleVals;
+    shader->scaleVals[0] = scaleVals[0];
+    shader->scaleVals[1] = scaleVals[1];
+    shader->scaleVals[2] = scaleVals[2];
     return;
 }
 
