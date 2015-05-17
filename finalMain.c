@@ -20,51 +20,16 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "shaderSetup.h"
-
+#include "object.h"
 
 #define INITIAL_HEIGHT 750
 #define INITIAL_WIDTH 750
 
 
+/**
+* Make a cylinder
+**/
 
-void createBuffers( )
-{
-    // get and load the verticies for your shape
-    float *points = vertexArray;
-    int dataSize = numVerts * 4 * sizeof( float );
-
-    // get and load the element data or connectivity
-    GLushort *elements = elementArray;
-    int elementDataSize = numVerts * sizeof( GLushort );
-
-    // ask OpenGL for ONE  buffer object ID
-    glGenBuffers( 1, &vbuffer );
-
-    // State what kind of buffer we want to refer to
-    // OpenGL can only have have one type of buffer be the current one
-    // This is have the vbuffer be our current GL_ARRAY_BUFFER
-    glBindBuffer( GL_ARRAY_BUFFER, vbuffer );
-
-    // Load our data and connect it to our vbuffer object so we can
-    // refer to it later just by binding the vbuffer object
-    // type of data, the size in bytes, the data itself, how to draw it
-    glBufferData( GL_ARRAY_BUFFER, dataSize, points, GL_STATIC_DRAW );
-
-    // Some programs at this point have a global value of whether we have
-    // initialized our buffer yet and this would be done right here
-
-
-    // Similar process for the connectivity/element data
-    glGenBuffers( 1, &ebuffer );
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, ebuffer );
-    glBufferData( GL_ELEMENT_ARRAY_BUFFER, elementDataSize, elements, GL_STATIC_DRAW );
-
-
-    // Stop having these buffers bound to the current OpenGL buffers
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
-    glBindBuffer( GL_ARRAY_BUFFER, 0 );
-}
 
 
 
@@ -91,33 +56,9 @@ void display( void )
     // clear your frame buffers
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-    // bind the vertex buffer you want to use
-    glBindBuffer( GL_ARRAY_BUFFER, vbuffer );
-
-    // bind the element buffer you want to use
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, ebuffer );
-
-    // Which shader program should I use and what data will it be getting
-    glUseProgram( program );
-
-    // This is where you give the data to uniform variables and state how arrib
-    // variables should get their data
-
-    // how to look at my GL_ARRAY_BUFFER for vertex data
-    // the object data ID, how many make up one, data type, should I transpose?,
-    // step, beginning offset
-
-    glEnableVertexAttribArray( vPosition );
-    glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0, 0 );
-
-    glUniformMatrix4fv( transformLocation, 1, GL_FALSE, &transformMatrix );
 
 
-    // everything is loaded now draw the shape with current buffers and shader program
-    glDrawElements( GL_TRIANGLES, numVerts, GL_UNSIGNED_SHORT, (void *)0);
-
-
-    // swap the buffers -> makes what you rendered to the screen facing buffer
+   // swap the buffers -> makes what you rendered to the screen facing buffer
     glutSwapBuffers();
     glutPostRedisplay(); // Tell glut to render another frame
 }

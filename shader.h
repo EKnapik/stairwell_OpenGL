@@ -4,6 +4,9 @@
 // this refers to how the shader program to
 // be executed depending on the object
 // holds all the info for vertex and fragment shaders
+#ifndef ShaderClass
+#define ShaderClass
+
 #include <GLUT/GLUT.h>
 #include <OpenGL/gl.h>
 #include <stdlib.h>
@@ -55,3 +58,5 @@ void setScale( Shader *shader, GLfloat scaleVals[] );
 // sets up all the lighting params, this is a static for the program
 // so the program has all the same light
 void setUpLighting( Shader *shader );
+
+#endif

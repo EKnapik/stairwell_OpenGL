@@ -2,10 +2,15 @@
 // Author: Eric M. Knapik
 // header file for the object struct
 
+#ifndef ObjectClass
+#define ObjectClass
+
 #include <GLUT/GLUT.h>
 #include <OpenGL/gl.h>
 #include <stdlib.h>
 #include <stdio.h>
+
+#include "shader.h"
 
 
 typedef enum
@@ -24,11 +29,12 @@ typedef struct Object_Struct
     GLfloat *normals;
     GLshort *connectivity;
     GLuint  numVerts;
+    GLuint numConnect;
     ObjectType type;
 
     GLuint  vBuffer;
     GLuint  eBuffer;
-    GLuint  shaderProgram;
+    Shader  *shader;
 
 } Object;
 
@@ -38,14 +44,14 @@ typedef struct Object_Struct
 // the light and material properties
 
 // the object creation method
-Object* mkObject( ObjectType objectType );
+Object* mkObject( ObjectType objectType, const char *vert, const char *frag );
 
 // the object deletion method
 void destroyObject( Object *object );
 
 // can give an array of verticies for the object
 void addVerticies( Object *object, GLfloat *verts, GLfloat *vertNorms,
-                   GLshort *connections, GLuint numVerts );
+                   GLshort *connections, GLuint numVerts, GLuint numConnect );
 
 // can add an individual triangle to the object mesh must be counter clockwise
 void addTriangle( Object *object, GLfloat x1, GLfloat y1, GLfloat z1, 
@@ -65,3 +71,5 @@ void setupObjectShader( char *vertShader, char *fragShader );
 
 // draw the current object
 void drawObject( Object *object );
+
+#endif

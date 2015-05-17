@@ -2,12 +2,42 @@
 // Author: Eric M. Knapik
 // implemtation for ambiguous object
 
+
 #include "object.h"
 
+/*
+typedef enum
+{
+    CIRCLE,
+    SQUARE,
+    CYLINDER,
+    CONE,
+    NONE
+} ObjectType;
 
+// Define the struct of my object
+typedef struct Object_Struct
+{
+    GLfloat *verticies;
+    GLfloat *normals;
+    GLshort *connectivity;
+    GLuint  numVerts;
+    GLuint numConnect;
+    ObjectType type;
+
+    GLuint  vBuffer;
+    GLuint  eBuffer;
+    Shader *shader;
+
+} Object;
+*/
+
+// How to calculate a buffer offset into the vertex buffer
+// this is so no warning occur because it expects a char *
+#define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 // the object creation method
-Object* mkObject( ObjectType objectType )
+Object* mkObject( ObjectType objectType, const char *vert, const char *frag )
 {
     Object *newObject = malloc( sizeof( Object ) );
     if( newObject == NULL )
@@ -22,6 +52,7 @@ Object* mkObject( ObjectType objectType )
     newObject->numVerts = 0;
 
     newObject->type = objectType;
+    newObject->shader = mkShader( vert, frag );
     
     return newObject;
 }
@@ -49,6 +80,8 @@ void destroyObject( Object *object )
             free( object->connectivity );
         }
 
+        destroyShader( object->shader );
+
         free( object );
     }
 
@@ -57,12 +90,13 @@ void destroyObject( Object *object )
 
 // can give an array of verticies for the object
 void addVerticies( Object *object, GLfloat *verts, GLfloat *vertNorms,
-                   GLshort *connections, GLuint numVerts )
+                   GLshort *connections, GLuint numVerts, GLuint numConnect )
 {
     object->verticies = verts;
     object->normals = vertNorms;
     object->connectivity = connections;
     object->numVerts = numVerts;
+    object->numConnect = numConnect;
 
     return;
 }
@@ -87,7 +121,7 @@ void setupGLBuffers( Object *object )
     // 4 floats make up one vertex
     int dataSize = object->numVerts * 4 * sizeof( GLfloat );
     // 3 verticies make one triangle
-    int elementDataSize = object->numVerts * 3 * sizeof( GLshort );
+    int elementDataSize = object->numConnect * 3 * sizeof( GLshort );
 
     // ask OpenGL to create on buffer object
     glGenBuffers( 1, &object->vBuffer );
@@ -110,9 +144,10 @@ void setupGLBuffers( Object *object )
 
 void drawObject( Object *object )
 {
+    int dataSize = object->numVerts * 4 * sizeof( GLfloat );
 
     // bind the shader program to use
-    glUseProgram( object->shaderProgram );
+    glUseProgram( object->shader->shaderProgram );
 
     // bind the array buffer
     glBindBuffer( GL_ARRAY_BUFFER, object->vBuffer );
@@ -121,10 +156,21 @@ void drawObject( Object *object )
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, object->eBuffer );
 
     // enable my vertex
-    // enable my normal
-    // pass the vertex to the shader
-    // pass other things to my shader
+    GLuint vPosition = glGetAttribLocation( object->shader->shaderProgram, "vPosition" );
+    glEnableVertexAttribArray( vPosition );
+    // pass the vertex to the shader the offset is 0 because it is first
+    glVertexAttribPointer( vPosition, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0) );
 
+    // enable my normal
+    GLuint vNormal = glGetAttribLocation( object->shader->shaderProgram, "vNormal" );
+    glEnableVertexAttribArray( vNormal );
+    // pass the normal to the shader, the offset is the data size of the vertex
+    // the size of a normal is 4 floats, my step between is 0, and dont normalize this
+    glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(dataSize) );
+
+    // pass other things to my shader using the function call
+    shaderDisplay( object->shader );
+    
     // Everything ready for this object so draw it starting at 0 in the array
     glDrawElements( GL_TRIANGLES, object->numVerts, GL_UNSIGNED_SHORT, (void *)0 );
 
