@@ -55,25 +55,25 @@ Shader* mkShader( const char *vert, const char *frag )
 
     // camera values
     // eye values
-    shader->eyePos[0] = 0.0f;
-    shader->eyePos[1] = 12.0f;
-    shader->eyePos[2] = 1.0f;
+    shader->eyePos[0] = -1.0f;
+    shader->eyePos[1] = 13.0f;
+    shader->eyePos[2] = 0.0f;
     // lookAt values
     shader->lookAt[0] = 0.0f;
     shader->lookAt[1] = 0.0f;
     shader->lookAt[2] = 0.0f;
     // upVector values
     shader->upVec[0] = 0.0f;
-    shader->upVec[1] = 1.0f;
-    shader->upVec[2] = 0.0f;
+    shader->upVec[1] = 0.0f;
+    shader->upVec[2] = -1.0f;
 
 
     // clipping window boundaries
-    shader->left = -3.0f;
-    shader->right = 3.0f;
-    shader->top = 3.0f;
-    shader->bot = -3.0f;
-    shader->near = 2.0f;
+    shader->left = -6.0f;
+    shader->right = 6.0f;
+    shader->top = 6.0f;
+    shader->bot = -6.0f;
+    shader->near = 3.0f;
     shader->far = -150.0f;
 
     return shader;

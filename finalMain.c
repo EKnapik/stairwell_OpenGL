@@ -222,6 +222,8 @@ void display( void )
     // draw the cylinder Column
     drawObject( cylinder1 );
     drawObject( cylinder2 );
+    drawObject( cylinder3 );
+    drawObject( cylinder4 );
 
 
     // swap the buffers -> makes what you rendered to the screen facing buffer
@@ -276,6 +278,8 @@ int main( int argc, char *argv[] )
     // make cylinder
     cylinder1 = mkCylinder(1, -3);
     cylinder2 = mkCylinder(-3, -3);
+    cylinder3 = mkCylinder(-3, 1);
+    cylinder4 = mkCylinder(1, 1);
 
     
 
