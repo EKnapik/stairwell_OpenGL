@@ -1,4 +1,4 @@
-// Cylinder.h
+// square.h
 // Author: Eric M. Knapik
 // header file
 
@@ -13,12 +13,12 @@
 #include <string.h>
 
 
-GLfloat* getCylinderVerticies( void );
+GLfloat* getSquareVerticies( void );
 
-GLfloat* getCylinderNorms( void );
+GLfloat* getSquareNorms( void );
 
-GLint getCylinderNumVert( void );
+GLint getSquareNumVert( void );
 
-GLshort* getCylinderConnectData( void );
+GLshort* getSquareConnectData( void );
 
 #endif

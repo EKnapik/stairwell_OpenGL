@@ -49,7 +49,7 @@ void mkCylinder( void )
     GLfloat scale[] = {2, 2, 2};
     setScale( cylinder->shader, scale );
 
-    GLfloat rotate[] = {90, 0, 25};
+    GLfloat rotate[] = {90, 30, 0};
     setRotate( cylinder->shader, rotate );
 
     //return cylinder;

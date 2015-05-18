@@ -141,7 +141,7 @@ GLfloat* getCylinderVerticies( void )
     0.46, -0.19, -0.25, 1, 0.46, -0.19, -0.50, 1, 0.50, 0.00, -0.50, 1,
     0.50, 0.00, -0.25, 1, 0.46, -0.19, -0.25, 1, 0.50, 0.00, -0.50, 1 };
 
-    size_t dataSize = sizeof( GLfloat ) * getCylinderNumVert();
+    size_t dataSize = sizeof( GLfloat ) * getCylinderNumVert() * 4;
 
     GLfloat *vertPointer = malloc( dataSize );
     memcpy( vertPointer, verts, dataSize );
@@ -286,7 +286,7 @@ GLfloat* getCylinderNorms( void )
     0.46, -0.19, 0, 0, 0.46, -0.19, 0, 0, 0.50, 0.00, 0, 0,
     0.50, 0.00, 0, 0, 0.46, -0.19, 0, 0, 0.50, 0.00, 0, 0 };
 
-    size_t dataSize = sizeof( GLfloat ) * getCylinderNumVert();
+    size_t dataSize = sizeof( GLfloat ) * getCylinderNumVert() * 4;
 
     GLfloat *normPointer = malloc( dataSize );
     memcpy( normPointer, norms, dataSize );

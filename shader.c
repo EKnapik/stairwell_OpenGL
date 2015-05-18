@@ -206,7 +206,7 @@ void setUpLighting( Shader *shader )
     GLfloat specExp = 10.0;
     GLfloat specCoeff = 1.0;
     GLfloat lightColor[] = {1.0, 1.0, 0.0, 1.0};
-    GLfloat lightPos[] = {0.0, 8.0, 12.0, 1.0};
+    GLfloat lightPos[] = {0.0, 5.0, 7.0, 1.0};
     GLfloat amLightColor[] = {0.5, 0.5, 0.5, 1.0};
 
     // pass the values to the shader by reference
