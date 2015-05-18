@@ -57,7 +57,7 @@ Shader* mkShader( const char *vert, const char *frag )
     // eye values
     shader->eyePos[0] = 0.0f;
     shader->eyePos[1] = 0.0f;
-    shader->eyePos[2] = 1.0f;
+    shader->eyePos[2] = 3.0f;
     // lookAt values
     shader->lookAt[0] = 0.0f;
     shader->lookAt[1] = 0.0f;
@@ -73,8 +73,8 @@ Shader* mkShader( const char *vert, const char *frag )
     shader->right = 1.0f;
     shader->top = 1.0f;
     shader->bot = -1.0f;
-    shader->near = 1.0f;
-    shader->far = 150.0f;
+    shader->near = 3.0f;
+    shader->far = -50.0f;
 
     return shader;
 }
@@ -185,7 +185,7 @@ void setUpLighting( Shader *shader )
 {
     // get the locations of all my variables
     // in larger applications this should not be done every frame
-    GLuint amColorLoc = glGetUniformLocation( shader->shaderProgram, "amColor" );
+    GLuint amColorLoc = glGetUniformLocation( shader->shaderProgram, "ambientColor" );
     GLuint amCoeffLoc = glGetUniformLocation( shader->shaderProgram, "amCoeff" );
     GLuint diffColorLoc = glGetUniformLocation( shader->shaderProgram, "diffColor" );
     GLuint diffCoeffLoc = glGetUniformLocation( shader->shaderProgram, "diffCoeff" );
@@ -206,7 +206,7 @@ void setUpLighting( Shader *shader )
     GLfloat specExp = 10.0;
     GLfloat specCoeff = 1.0;
     GLfloat lightColor[] = {1.0, 1.0, 0.0, 1.0};
-    GLfloat lightPos[] = {0.0, 5.0, 2.0, 1.0};
+    GLfloat lightPos[] = {0.0, 8.0, 12.0, 1.0};
     GLfloat amLightColor[] = {0.5, 0.5, 0.5, 1.0};
 
     // pass the values to the shader by reference

@@ -12,16 +12,6 @@
 
 #include "shader.h"
 
-
-typedef enum
-{
-    CIRCLE,
-    SQUARE,
-    CYLINDER,
-    CONE,
-    NONE
-} ObjectType;
-
 // Define the struct of my object
 typedef struct Object_Struct
 {
@@ -30,7 +20,6 @@ typedef struct Object_Struct
     GLshort *connectivity;
     GLuint  numVerts;
     GLuint numConnect;
-    ObjectType type;
 
     GLuint  vBuffer;
     GLuint  eBuffer;
@@ -44,7 +33,7 @@ typedef struct Object_Struct
 // the light and material properties
 
 // the object creation method
-Object* mkObject( ObjectType objectType, const char *vert, const char *frag );
+Object* mkObject( const char *vert, const char *frag );
 
 // the object deletion method
 void destroyObject( Object *object );
@@ -65,9 +54,6 @@ void findAverageNormals( Object *object );
 
 // when ready setup the vBuffer and the eBuffer
 void setupGLBuffers( Object *object );
-
-// setup the shader program giving the vertex shader
-void setupObjectShader( char *vertShader, char *fragShader );
 
 // draw the current object
 void drawObject( Object *object );

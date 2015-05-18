@@ -21,15 +21,39 @@
 #include <math.h>
 
 #include "object.h"
+#include "cylinder.h"
 
 #define INITIAL_HEIGHT 750
 #define INITIAL_WIDTH 750
 
+// Making this a global for now
+// idea is to pass all objects to the display function
+// from the main, or just make them all global
+Object *cylinder;
 
 /**
 * Make a cylinder
 **/
+void mkCylinder( void )
+{
+    cylinder = mkObject( "cylinder.vert", "cylinder.frag" );
+    // add the data to the object
+    addVerticies( cylinder, getCylinderVerticies(), getCylinderNorms(),
+    getCylinderConnectData(), getCylinderNumVert(), getCylinderNumVert() );
+    // setup my buffers for this object
+    setupGLBuffers( cylinder );
+    
+    GLfloat translation[] = { 0, 0, -2 };
+    setTrans( cylinder->shader, translation );
 
+    GLfloat scale[] = {2, 2, 2};
+    setScale( cylinder->shader, scale );
+
+    GLfloat rotate[] = {90, 0, 25};
+    setRotate( cylinder->shader, rotate );
+
+    //return cylinder;
+}
 
 
 
@@ -57,8 +81,9 @@ void display( void )
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 
+    drawObject( cylinder );    
 
-   // swap the buffers -> makes what you rendered to the screen facing buffer
+    // swap the buffers -> makes what you rendered to the screen facing buffer
     glutSwapBuffers();
     glutPostRedisplay(); // Tell glut to render another frame
 }
@@ -101,7 +126,9 @@ int main( int argc, char *argv[] )
     // each object has a buffer creation method
     // shader program creation
     // and how to run its display method
-
+    
+    // make the cylinder
+    mkCylinder();
 
     glutMainLoop();
 

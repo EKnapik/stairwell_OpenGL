@@ -6,15 +6,6 @@
 #include "object.h"
 
 /*
-typedef enum
-{
-    CIRCLE,
-    SQUARE,
-    CYLINDER,
-    CONE,
-    NONE
-} ObjectType;
-
 // Define the struct of my object
 typedef struct Object_Struct
 {
@@ -23,7 +14,6 @@ typedef struct Object_Struct
     GLshort *connectivity;
     GLuint  numVerts;
     GLuint numConnect;
-    ObjectType type;
 
     GLuint  vBuffer;
     GLuint  eBuffer;
@@ -37,7 +27,7 @@ typedef struct Object_Struct
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 // the object creation method
-Object* mkObject( ObjectType objectType, const char *vert, const char *frag )
+Object* mkObject( const char *vert, const char *frag )
 {
     Object *newObject = malloc( sizeof( Object ) );
     if( newObject == NULL )
@@ -51,7 +41,6 @@ Object* mkObject( ObjectType objectType, const char *vert, const char *frag )
     newObject->connectivity = NULL;
     newObject->numVerts = 0;
 
-    newObject->type = objectType;
     newObject->shader = mkShader( vert, frag );
     
     return newObject;
