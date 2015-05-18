@@ -3,8 +3,8 @@
 // header file
 
 
-#ifndef CYLINDER
-#define CYLINDER
+#ifndef SQUARE
+#define SQUARE
 
 #include <GLUT/GLUT.h>
 #include <OpenGL/gl.h>
