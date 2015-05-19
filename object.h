@@ -5,12 +5,12 @@
 #ifndef ObjectClass
 #define ObjectClass
 
+#include <SOIL/SOIL.h>
 #include <GLUT/GLUT.h>
 #include <OpenGL/gl.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <SOIL/SOIL.h>
 #include "shader.h"
 
 // Define the struct of my object

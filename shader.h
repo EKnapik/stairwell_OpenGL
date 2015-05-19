@@ -7,6 +7,7 @@
 #ifndef ShaderClass
 #define ShaderClass
 
+#include <SOIL/SOIL.h>
 #include <GLUT/GLUT.h>
 #include <OpenGL/gl.h>
 #include <stdlib.h>

@@ -13,6 +13,7 @@
 * Mac maintains the current version of openGL and is backwards compatible
 * I think
 **/
+#include <SOIL/SOIL.h>
 #include <GLUT/GLUT.h>
 #include <OpenGL/gl.h>
 
@@ -20,7 +21,6 @@
 #include <stdio.h>
 #include <math.h>
 
-#include <SOIL/SOIL.h>
 #include "object.h"
 #include "cylinder.h"
 #include "square.h"
@@ -64,7 +64,7 @@ Object* mkCylinder( float xTrans, float zTrans )
     GLfloat scale[] = {2.5, 2.5, 80};
     setScale( cylinder->shader, scale );
 
-    GLfloat rotate[] = {90, 0, 0};
+    GLfloat rotate[] = {90, 0, 90};
     setRotate( cylinder->shader, rotate );
 
     return cylinder;
@@ -212,7 +212,7 @@ void display( void )
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
     // draw base
-    // drawObject( baseGround );
+    drawObject( baseGround );
 
     // draw test staircase with landing at the top
     for( int i = 0; i < stairSet1->numObjects; i++ )
@@ -278,7 +278,7 @@ int main( int argc, char *argv[] )
     // and how to run its display method
 
     // make the baseLayer my ground in the scene, it appears to be a stone
-    // mkBase();
+    mkBase();
 
     // make all the stair sets
     stairSet1 = mkStairSet( 0, 245, 1, -3 );
