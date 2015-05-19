@@ -235,7 +235,7 @@ void display( void )
 
     // swap the buffers -> makes what you rendered to the screen facing buffer
     glutSwapBuffers();
-    glutPostRedisplay(); // Tell glut to render another frame
+    //glutPostRedisplay(); // Tell glut to render another frame
 }
 
 void setupGLUT( int argc, char *argv[] )
@@ -297,7 +297,6 @@ int main( int argc, char *argv[] )
     cylinder4 = mkCylinder(1, 1);
 
     
-
 
     glutMainLoop();
 
