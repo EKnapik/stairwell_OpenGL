@@ -144,7 +144,7 @@ ComplexObject* mkStairSet( float firstHeight, float baseAngle,
 
     // there are 13 stairs in a stairSet
     stairSet->numObjects = 14;
-    stairSet->object = malloc( sizeof( Object* ) * 13 );
+    stairSet->object = malloc( sizeof( Object* ) * 14 );
     float currentAngle = baseAngle;
     float currentHeight = firstHeight;
 
