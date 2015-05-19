@@ -56,12 +56,12 @@ Shader* mkShader( const char *vert, const char *frag )
     // camera values
     // eye values
     shader->eyePos[0] = -1.0f;
-    shader->eyePos[1] = 13.0f;
+    shader->eyePos[1] = 22.00f;
     shader->eyePos[2] = 0.0f;
     // lookAt values
     shader->lookAt[0] = 0.0f;
     shader->lookAt[1] = 0.0f;
-    shader->lookAt[2] = 0.0f;
+    shader->lookAt[2] = -3.0f;
     // upVector values
     shader->upVec[0] = 0.0f;
     shader->upVec[1] = 0.0f;
@@ -69,12 +69,12 @@ Shader* mkShader( const char *vert, const char *frag )
 
 
     // clipping window boundaries
-    shader->left = -6.0f;
-    shader->right = 6.0f;
-    shader->top = 6.0f;
-    shader->bot = -6.0f;
-    shader->near = 3.0f;
-    shader->far = -150.0f;
+    shader->left = -1.0f;
+    shader->right = 1.0f;
+    shader->top = 1.0f;
+    shader->bot = -1.0f;
+    shader->near = 1.0f;
+    shader->far = -1.0f;
 
     return shader;
 }
@@ -206,7 +206,7 @@ void setUpLighting( Shader *shader )
     GLfloat specExp = 25.0;
     GLfloat specCoeff = 1.0;
     GLfloat lightColor[] = {1.0, 1.0, 0.0, 1.0};
-    GLfloat lightPos[] = {-10.0, 10.0, 1.0, 1.0};
+    GLfloat lightPos[] = {-2.0, 15.0, -15.0, 1.0};
     GLfloat amLightColor[] = {0.5, 0.5, 0.5, 1.0};
 
     // pass the values to the shader by reference

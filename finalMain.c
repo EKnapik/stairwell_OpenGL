@@ -42,7 +42,8 @@ typedef struct ComplexObjectStruct
 // from the main, or just make them all global
 Object *cylinder1, *cylinder2, *cylinder3, *cylinder4;;
 Object *baseGround;
-ComplexObject *stairSet1, *stairSet2, *stairSet3;
+ComplexObject *stairSet1, *stairSet2, *stairSet3, *stairSet4;
+ComplexObject *stairSet5, *stairSet6, *stairSet7;
 
 /**
 * Make a cylinder
@@ -56,10 +57,10 @@ Object* mkCylinder( float xTrans, float zTrans )
     // setup my buffers for this object
     setupGLBuffers( cylinder );
     
-    GLfloat translation[] = { xTrans, 25, zTrans };
+    GLfloat translation[] = { xTrans, 40, zTrans };
     setTrans( cylinder->shader, translation );
 
-    GLfloat scale[] = {2.5, 2.5, 50};
+    GLfloat scale[] = {2.5, 2.5, 80};
     setScale( cylinder->shader, scale );
 
     GLfloat rotate[] = {90, 0, 0};
@@ -217,6 +218,11 @@ void display( void )
     {
         drawObject( stairSet1->object[i] );
         drawObject( stairSet2->object[i] );
+        drawObject( stairSet3->object[i] );
+        drawObject( stairSet4->object[i] );
+        drawObject( stairSet5->object[i] );
+        drawObject( stairSet6->object[i] );
+        drawObject( stairSet7->object[i] );
     }
 
     // draw the cylinder Column
@@ -272,8 +278,16 @@ int main( int argc, char *argv[] )
 
     // make the baseLayer my ground in the scene, it appears to be a stone
     // mkBase();
+
+    // make all the stair sets
     stairSet1 = mkStairSet( 0, 245, 1, -3 );
     stairSet2 = mkStairSet( 3.25, 345, -3, -3 );
+    stairSet3 = mkStairSet( 6.5, 65, -3, 1 );
+    stairSet4 = mkStairSet( 9.75, 155, 1, 1 );
+    stairSet5 = mkStairSet( 13, 245, 1, -3 );
+    stairSet6 = mkStairSet( 16.25, 345, -3, -3 );
+    stairSet7 = mkStairSet( 19.5, 65, -3, 1 );
+
     
     // make cylinder
     cylinder1 = mkCylinder(1, -3);
