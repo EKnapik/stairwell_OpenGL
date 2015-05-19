@@ -427,7 +427,7 @@ GLfloat* getCylinderUVs( void )
     0.0, 0.0, 1.0, 0.0, 1.0, 1.0,
     1.0, 1.0, 0.0, 1.0, 0.0, 0.0 };
 
-    size_t dataSize = sizeof( GLfloat ) * getSquareNumVert() * 2;
+    size_t dataSize = sizeof( GLfloat ) * getCylinderNumVert() * 2;
     
     GLfloat *uvPointer = malloc( dataSize );
     memcpy( uvPointer, uvs, dataSize );
