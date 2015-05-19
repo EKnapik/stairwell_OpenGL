@@ -52,6 +52,30 @@ GLfloat* getSquareNorms( void )
     return normPointer;
 }
 
+GLfloat* getSquareUVs( void )
+{
+    GLfloat uvs[] = {
+    0.0, 0.0, 1.0, 0.0, 1.0, 1.0,
+    1.0, 1.0, 0.0, 1.0, 0.0, 0.0,
+    0.0, 0.0, 1.0, 0.0, 1.0, 1.0,
+    1.0, 1.0, 0.0, 1.0, 0.0, 0.0,
+    0.0, 0.0, 1.0, 0.0, 1.0, 1.0,
+    1.0, 1.0, 0.0, 1.0, 0.0, 0.0,
+    0.0, 0.0, 1.0, 0.0, 1.0, 1.0,
+    1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 
+    0.0, 0.0, 1.0, 0.0, 1.0, 1.0,
+    1.0, 1.0, 0.0, 1.0, 0.0, 0.0,
+    0.0, 0.0, 1.0, 0.0, 1.0, 1.0,
+    1.0, 1.0, 0.0, 1.0, 0.0, 0.0 };
+
+    size_t dataSize = sizeof( GLfloat ) * getSquareNumVert() * 2;
+    
+    GLfloat *uvPointer = malloc( dataSize );
+    memcpy( uvPointer, uvs, dataSize );
+
+    return uvPointer;
+}
+
 GLint getSquareNumVert( void )
 {
     return 36;

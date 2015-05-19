@@ -17,6 +17,8 @@ GLfloat* getCylinderVerticies( void );
 
 GLfloat* getCylinderNorms( void );
 
+GLfloat* getCylinderUVs( void );
+
 GLint getCylinderNumVert( void );
 
 GLshort* getCylinderConnectData( void );

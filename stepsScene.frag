@@ -19,6 +19,10 @@ varying float specCoeffOut;
 varying vec4 lightColorOut;
 varying vec4 amLightColorOut;
 
+// TEXTURE
+varing vec2 texCoord;
+uniform sampler2d texture;
+
 
 void main()
 {
@@ -35,6 +39,9 @@ void main()
     vec4 allAm = amCoeffOut * amLightColorOut * diffColorOut;
     vec4 allDiff = diffCoeffOut * lightColorOut * diffColorOut * LDN;
     vec4 allSpec = pow(RDV, specExpOut) * lightColorOut * specCoeffOut * specColorOut;
+    //vec4 allAm = amCoeffOut * amLightColorOut * texture2D(texture, texCoord);
+    //vec4 allDiff = diffCoeffOut * lightColorOut * texture2D(texture, texCoord) * LDN;
+    //vec4 allSpec = pow(RDV, specExpOut) * lightColorOut * specCoeffOut * texture2D(texture, texCoord);
 
     gl_FragColor = allAm + allDiff + allSpec;
 }

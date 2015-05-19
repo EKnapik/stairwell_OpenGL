@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include <SOIL/SOIL.h>
 #include "shader.h"
 
 // Define the struct of my object
@@ -18,8 +19,14 @@ typedef struct Object_Struct
     GLfloat *verticies;
     GLfloat *normals;
     GLshort *connectivity;
+    GLfloat *uvs;
     GLuint  numVerts;
     GLuint numConnect;
+
+    GLuint textBufferID;
+    GLuint texCoordID;
+    GLuint texID;
+    const char *texFile;
 
     GLuint  vBuffer;
     GLuint  eBuffer;
@@ -33,14 +40,14 @@ typedef struct Object_Struct
 // the light and material properties
 
 // the object creation method
-Object* mkObject( const char *vert, const char *frag );
+Object* mkObject( const char *texFile, const char *vert, const char *frag );
 
 // the object deletion method
 void destroyObject( Object *object );
 
 // can give an array of verticies for the object
 void addVerticies( Object *object, GLfloat *verts, GLfloat *vertNorms,
-                   GLshort *connections, GLuint numVerts, GLuint numConnect );
+                   GLshort *connections, GLuint numVerts, GLuint numConnect, GLfloat *uvs );
 
 // can add an individual triangle to the object mesh must be counter clockwise
 void addTriangle( Object *object, GLfloat x1, GLfloat y1, GLfloat z1, 

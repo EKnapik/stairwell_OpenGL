@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <math.h>
 
+#include <SOIL/SOIL.h>
 #include "object.h"
 #include "cylinder.h"
 #include "square.h"
@@ -50,10 +51,10 @@ ComplexObject *stairSet5, *stairSet6, *stairSet7;
 **/
 Object* mkCylinder( float xTrans, float zTrans )
 {
-    Object *cylinder = mkObject( "stepsScene.vert", "stepsScene.frag" );
+    Object *cylinder = mkObject( "pillar.jpg", "stepsScene.vert", "stepsScene.frag" );
     // add the data to the object
     addVerticies( cylinder, getCylinderVerticies(), getCylinderNorms(),
-    getCylinderConnectData(), getCylinderNumVert(), getCylinderNumVert() );
+    getCylinderConnectData(), getCylinderNumVert(), getCylinderNumVert(), getCylinderUVs() );
     // setup my buffers for this object
     setupGLBuffers( cylinder );
     
@@ -74,10 +75,10 @@ Object* mkCylinder( float xTrans, float zTrans )
 **/
 Object* mkLanding( float height, float angle, float xTrans, float zTrans )
 {
-    Object *landing = mkObject( "stepsScene.vert", "stepsScene.frag" );
+    Object *landing = mkObject( "step.jpg", "stepsScene.vert", "stepsScene.frag" );
     // add the data to the object
     addVerticies( landing, getSquareVerticies(), getSquareNorms(),
-    getSquareConnectData(), getSquareNumVert(), getSquareNumVert() );
+    getSquareConnectData(), getSquareNumVert(), getSquareNumVert(), getSquareUVs() );
 
     // setup my buffers for this object
     setupGLBuffers( landing );
@@ -101,10 +102,10 @@ Object* mkLanding( float height, float angle, float xTrans, float zTrans )
 **/
 Object* makeStep( float height, float angle, float xTrans, float zTrans )
 {
-    Object *step = mkObject( "stepsScene.vert", "stepsScene.frag" );
+    Object *step = mkObject( "step.jpg", "stepsScene.vert", "stepsScene.frag" );
     // add the data to the object
     addVerticies( step, getSquareVerticies(), getSquareNorms(),
-    getSquareConnectData(), getSquareNumVert(), getSquareNumVert() );
+    getSquareConnectData(), getSquareNumVert(), getSquareNumVert(), getSquareUVs() );
 
     // setup my buffers for this object
     setupGLBuffers( step );
@@ -175,10 +176,10 @@ ComplexObject* mkStairSet( float firstHeight, float baseAngle,
 **/
 void mkBase( void )
 {
-    baseGround = mkObject( "stepsScene.vert", "stepsScene.frag" );
+    baseGround = mkObject( "floor.jpg", "stepsScene.vert", "stepsScene.frag" );
     // add the data to the object
     addVerticies( baseGround, getSquareVerticies(), getSquareNorms(),
-    getSquareConnectData(), getSquareNumVert(), getSquareNumVert() );
+    getSquareConnectData(), getSquareNumVert(), getSquareNumVert(), getSquareUVs() );
 
     // setup my buffers for this object
     setupGLBuffers( baseGround );

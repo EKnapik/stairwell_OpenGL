@@ -15,6 +15,11 @@ typedef struct Object_Struct
     GLuint  numVerts;
     GLuint numConnect;
 
+    GLuint textBufferID; //have to create a buffer to hold the image
+    GLuint texCoordID; // the ID of the "texCoord" variable
+    GLuint texID; // the id of the "texture" variable
+    const char *texFile;
+
     GLuint  vBuffer;
     GLuint  eBuffer;
     Shader *shader;
@@ -27,7 +32,7 @@ typedef struct Object_Struct
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 // the object creation method
-Object* mkObject( const char *vert, const char *frag )
+Object* mkObject( const char *texFile, const char *vert, const char *frag )
 {
     Object *newObject = malloc( sizeof( Object ) );
     if( newObject == NULL )
@@ -42,6 +47,8 @@ Object* mkObject( const char *vert, const char *frag )
     newObject->numVerts = 0;
 
     newObject->shader = mkShader( vert, frag );
+
+    newObject->texFile = texFile;
     
     return newObject;
 }
@@ -79,13 +86,14 @@ void destroyObject( Object *object )
 
 // can give an array of verticies for the object
 void addVerticies( Object *object, GLfloat *verts, GLfloat *vertNorms,
-                   GLshort *connections, GLuint numVerts, GLuint numConnect )
+                   GLshort *connections, GLuint numVerts, GLuint numConnect, GLfloat *uvs )
 {
     object->verticies = verts;
     object->normals = vertNorms;
     object->connectivity = connections;
     object->numVerts = numVerts;
     object->numConnect = numConnect;
+    object->uvs = uvs;
 
     return;
 }
@@ -109,17 +117,21 @@ void setupGLBuffers( Object *object )
 {
     // 4 floats make up one vertex
     int dataSize = object->numVerts * 4 * sizeof( GLfloat );
+    int uvDataSize = object->numVerts * 2 * sizeof( GLfloat );
     // 3 verticies make one triangle
     int elementDataSize = object->numConnect * 3 * sizeof( GLshort );
 
     // ask OpenGL to create on buffer object
     glGenBuffers( 1, &object->vBuffer );
     glBindBuffer( GL_ARRAY_BUFFER, object->vBuffer );
-    glBufferData( GL_ARRAY_BUFFER, dataSize*2, 0, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, (dataSize*2) + uvDataSize, 0, GL_STATIC_DRAW );
     // This binds my normals and my verticies to the same buffer
     // my normals are also a vector 4
     glBufferSubData( GL_ARRAY_BUFFER, 0, dataSize, object->verticies );
+    // loads in the normals
     glBufferSubData( GL_ARRAY_BUFFER, dataSize, dataSize, object->normals );
+    // load in my uv coords
+    glBufferSubData( GL_ARRAY_BUFFER, dataSize*2, uvDataSize, object->uvs );
 
     // now do the same for the element array
     glGenBuffers( 1, &object->eBuffer );
@@ -156,6 +168,26 @@ void drawObject( Object *object )
     // pass the normal to the shader, the offset is the data size of the vertex
     // the size of a normal is 4 floats, my step between is 0, and dont normalize this
     glVertexAttribPointer( vNormal, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(dataSize) );
+
+
+    // TEXTURE STUFF
+    // first load in the image
+    glActiveTexture( GL_TEXTURE0 );
+    object->textBufferID = SOILSOIL_load_OGL_texture ( object->texFile, 
+    SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS );
+    
+    // pass the uv coords down
+    object->texCoordID = glGetAttribLocation( object->shader->shaderProgram,
+                        "s_vTexCoord" );
+    glEnableVertexAttribArray( object->texCoordID );
+    glVertexAttribPointer( object->texCoordID, 2, GL_FLOAT, GL_FALSE,
+                           0, BUFFER_OFFSET(dataSize*2) );
+
+    // actually pass the texture down
+    object->texID = glGetUniformLocation( object->shader->shaderProgram, "texture" );
+    glUniform1i( object->texID, 0 );
+    
+
 
     // pass other things to my shader using the function call
     shaderDisplay( object->shader );

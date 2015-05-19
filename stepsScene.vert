@@ -11,6 +11,10 @@ attribute vec4 vPosition;
 // Normal vector at vertex (in model space)
 attribute vec4 vNormal;
 
+// TEXTURE
+attribute vec2 s_vTexCoord;
+varying vec2 texCoord;
+
 // Model transformations
 uniform vec3 theta;
 uniform vec3 trans;
@@ -140,4 +144,7 @@ void main()
     specCoeffOut = specCoeff;
     lightColorOut = lightColor;
     amLightColorOut = amLightColor;
+
+    // Pass the texture through
+    texCoord = s_vTexCoord;
 }

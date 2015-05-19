@@ -1,6 +1,6 @@
 # Ma Make File
 final:  shader.o object.o shaderSetup.o cylinder.o square.o finalMain.o
-		gcc -std=c99 -o final shader.o object.o shaderSetup.o cylinder.o square.o finalMain.o -framework OpenGL -framework GLUT
+		gcc -std=c99 -o final shader.o object.o shaderSetup.o cylinder.o square.o finalMain.o -framework CoreFoundation -framework OpenGL -framework GLUT -lSOIL
 
 shaderSetup.o: shaderSetup.c shaderSetup.h
 		gcc -c -std=c99 shaderSetup.c

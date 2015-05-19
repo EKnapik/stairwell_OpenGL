@@ -17,6 +17,8 @@ GLfloat* getSquareVerticies( void );
 
 GLfloat* getSquareNorms( void );
 
+GLfloat* getSquareUVs( void );
+
 GLint getSquareNumVert( void );
 
 GLshort* getSquareConnectData( void );
